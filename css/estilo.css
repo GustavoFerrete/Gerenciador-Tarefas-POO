@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* CSS Tela de Cadastro */
+
+#dlgCadastro {
+    background: linear-gradient(45deg, #ff00cc, #3333cc, #00ffcc, #ffcc00);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    margin-top: 10rem;
+}
+
+#dlgCadastro {
+    font-size: 1.3rem;
+    width: 50%;
+    margin: 15rem auto;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0px 1px 80px white;
+}
+
+#dlgCadastro label {
+    color: white;
+    font-weight: bold;
+}
+
+button{
+    border-radius: 50px;
+    border: 2px solid black;
+    background-color: gainsboro;
+    color: black;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+button:hover{
+    background-color: black;
+    color: white;
+}
+
+button:active{
+    background-color: white;
+    color: black;
+}
+
+/* RESPONSIVIDADE */
+
+/* `sm` applies to x-small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.97px) {
+    .container {
+        margin-top: 3rem;
+        background-color: black;
+    }
+
+    #frmCadastro {
+        font-size: 0.9rem;
+    }
+
+    .dlgBtn {
+        margin: 0px;
+        width: 100%;
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 575.98px) and (max-width: 765px) {
+    .container {
+        margin-top: 5rem;
+        background-color: red;
+        min-width: 100%;
+    }
+
+    #frmCadastro {
+        font-size: 1.2rem;
+    }
+
+    .dlgBtn {
+        margin: 0px;
+        width: 100%;
+        font-size: 1rem;
+    }
+}
+
+
+/* `md` applies to small devices (landscape phones, less than 768px)*/
+@media (min-width: 766px) and (max-width: 991.98px) {
+    .container {
+        background-color: blue;
+        min-width: 100%;
+    }
+
+    #frmCadastro {
+        min-width: 100%;
+    }
+
+    .dlgBtn {
+        margin: 0;
+        width: 100%;
+        font-size: 1.1rem;
+    }
+}
+
+
+/* `lg` applies to medium devices (tablets, less than 992px)*/
+@media (min-width: 991.98px) and (max-width: 1199.98px) {
+    .container {
+        background-color: yellow;
+        min-width: 100%;
+    }
+}
+
+
+/* `xl` applies to large devices (desktops, less than 1200px)
+@media (min-width: 1199.98px) { 
+    
+ }
+*/
+/* `xxl` applies to x-large devices (large desktops, less than 1400px)
+@media (min-width: 1399.98px) {  }*/

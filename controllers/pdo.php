@@ -6,7 +6,7 @@ $db_pass = '';
 
 try {
     $pdo = new PDO($db_dsname, $db_user, $db_pass);
-    //echo "Conexão realizada com sucesso";
+    echo "Conexão realizada com sucesso";
 }catch(PDOException $e){
     echo "Erro: ".$e->getMessage();
 }
