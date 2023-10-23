@@ -26,7 +26,7 @@ session_start();
     <div class="container">
 
         <div id="dlgCadastro">
-            <form id="frmCadastro" method="post">
+            <form id="frmCadastro" method="POST" action="../controllers/cadastrar.php">
                 <div class="dlgInput">
                     <label style="width:100%;">Nome Completo:</label> <input type="text" name="nome" id="nome" required style="width:100%;">
                     <label style="width:100%;">Usuário:</label> <input type="text" name="usuario" id="usuario" required style="width:100%;">
@@ -35,7 +35,7 @@ session_start();
                 </div>
 
                 <div class="dlgBtn" style="display: flex; margin-top: 35px;">
-                    <button type="button" id="btnCadastrar" style="width:45%; margin: 0 auto;">Cadastrar</button>
+                    <button type="button" id="btnCadastrar" name="btnCadastrar" style="width:45%; margin: 0 auto;">Cadastrar <?php $_SESSION['cadastro'] = 1; ?></button>
                     <button type="button" id="btnLimpar" style="width:45%; margin: 0 auto;">Limpar Campos</button>
                 </div>
 
@@ -48,7 +48,27 @@ session_start();
 
     <script>
         $(document).ready(function() {
+            $('#frmCadastro').submit(function(e) {
+                    e.preventDefault();
+                    if ($('#senha').val() === $('#confSenha').val()) {
+                        if (this.checkValidity()) {
+                            console.log('Formulário válido, enviando...');
+                            this.submit();
+                        } else {
+                            alert('Formulário inválido!');
+                        }
+                    }else{
+                        alert('Senhas não conferem!');
+                    }
+                });
 
+        $('#btnCadastrar').click(function() {
+            $('#frmCadastro').submit();
+        });
+
+        $('#btnLimpar').click(function() {
+            $('#frmCadastro')[0].reset();
+        })
         });
     </script>
 </body>

@@ -70,18 +70,20 @@ button:active{
 /* `sm` applies to x-small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.97px) {
     .container {
-        margin-top: 3rem;
         background-color: black;
     }
 
-    #frmCadastro {
-        font-size: 0.9rem;
+    #dlgCadastro {
+        width: 100%;
+        margin: 5rem auto;
     }
 
-    .dlgBtn {
-        margin: 0px;
-        width: 100%;
-        font-size: 0.8rem;
+    #frmCadastro {
+        font-size: 0.7rem;
+    }
+
+    button{
+        font-size: 0.7rem;
     }
 }
 
@@ -92,6 +94,10 @@ button:active{
         min-width: 100%;
     }
 
+    #dlgCadastro {
+        width: 80%;
+    }
+
     #frmCadastro {
         font-size: 1.2rem;
     }
@@ -99,6 +105,9 @@ button:active{
     .dlgBtn {
         margin: 0px;
         width: 100%;
+    }
+
+    button{
         font-size: 1rem;
     }
 }
@@ -111,6 +120,10 @@ button:active{
         min-width: 100%;
     }
 
+    #dlgCadastro {
+        width: 60%;
+    }
+
     #frmCadastro {
         min-width: 100%;
     }
@@ -118,7 +131,10 @@ button:active{
     .dlgBtn {
         margin: 0;
         width: 100%;
-        font-size: 1.1rem;
+    }
+
+    button{
+        font-size: 1rem;
     }
 }
 
