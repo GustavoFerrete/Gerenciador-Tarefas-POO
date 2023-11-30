@@ -25,10 +25,6 @@
     }
 }
 
-.container {
-    margin-top: 10rem;
-}
-
 #dlgCadastro {
     font-size: 1.3rem;
     width: 50%;
@@ -43,7 +39,7 @@
     font-weight: bold;
 }
 
-button{
+button {
     border-radius: 50px;
     border: 2px solid black;
     background-color: gainsboro;
@@ -55,23 +51,70 @@ button{
     width: 100%;
 }
 
-button:hover{
-    background-color: black;
+button:hover {
+    background-color: rgb(255, 20, 20);
     color: white;
 }
 
-button:active{
+button:active {
     background-color: white;
     color: black;
+}
+
+/* TELA DE LOGIN */
+
+.login {
+    border: 1px solid white;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgba(0, 0, 0, 0.63);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    height: 75vh;
+}
+
+.left {
+    background-color: white;
+    flex: 1;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+}
+
+.right {
+    background-color: black;
+    flex: 1;
+    padding: 20px;
+    border-radius: 0 10px 10px 0;
+}
+
+/* Estilos para os campos de login (exemplo) */
+.input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 /* RESPONSIVIDADE */
 
 /* `sm` applies to x-small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.97px) {
-    .container {
-        background-color: black;
-    }
 
     #dlgCadastro {
         width: 100%;
@@ -82,7 +125,7 @@ button:active{
         font-size: 0.7rem;
     }
 
-    button{
+    button {
         font-size: 0.7rem;
     }
 }
@@ -90,7 +133,7 @@ button:active{
 @media (min-width: 575.98px) and (max-width: 765px) {
     .container {
         margin-top: 5rem;
-        background-color: red;
+        /*background-color: red;*/
         min-width: 100%;
     }
 
@@ -107,7 +150,7 @@ button:active{
         width: 100%;
     }
 
-    button{
+    button {
         font-size: 1rem;
     }
 }
@@ -116,7 +159,7 @@ button:active{
 /* `md` applies to small devices (landscape phones, less than 768px)*/
 @media (min-width: 766px) and (max-width: 991.98px) {
     .container {
-        background-color: blue;
+        /*background-color: blue;*/
         min-width: 100%;
     }
 
@@ -133,7 +176,7 @@ button:active{
         width: 100%;
     }
 
-    button{
+    button {
         font-size: 1rem;
     }
 }
@@ -142,7 +185,7 @@ button:active{
 /* `lg` applies to medium devices (tablets, less than 992px)*/
 @media (min-width: 991.98px) and (max-width: 1199.98px) {
     .container {
-        background-color: yellow;
+        /*background-color: yellow;*/
         min-width: 100%;
     }
 }
