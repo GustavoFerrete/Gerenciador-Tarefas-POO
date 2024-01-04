@@ -12,7 +12,7 @@ extract($_POST, EXTR_OVERWRITE);
 $senha_md5 = md5($senha);
 
 if ($_SESSION['cadastro'] == 1) {
-    $insert = "INSERT INTO usuario (nome_completo, usuario, senha) VALUES ('$nome', '$usuario', '$senha_md5')";
+    $insert = "INSERT INTO usuarios (nome_completo, usuario, senha) VALUES ('$nome', '$usuario', '$senha_md5')";
     $query = $pdo->prepare($insert);
     $query->execute();
 
