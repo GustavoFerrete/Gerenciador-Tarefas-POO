@@ -37,6 +37,5 @@ $response = array(
     'success' => true,
     'msg_t' => 'Tarefa criada com sucesso!'
 );
-header('Content-Type: application/json');
 echo json_encode($response);
 

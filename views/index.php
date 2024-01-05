@@ -39,16 +39,12 @@ if (isset($_GET['sair'])) {
 </head>
 
 <body style="background-color: rgba(0, 0, 0, 0.63); width: 80%; margin: 0 auto; padding: 10px">
-    <!-- 
-            <a href="?sair">Sair</a>    
-        -->
 
-
-    <table id="grdTarefas" class="easyui-datagrid" title="Lista de Tarefas" border="true" fit="true" fitColumns="true" pagination="true" singleSelect="true" pageList="[10,20,50,100]" pageSize="50" striped="true" rownumbers="true" toolbar="#pesquisa">
+    <table id="grdTarefas" class="easyui-datagrid" title="Lista de Tarefas" border="true" fit="true" fitColumns="true" pagination="true" singleSelect="true" pageList="[10,20,50,100]" pageSize="50" striped="true" rownumbers="true" toolbar="#dlgBotoes"> 
 
         <thead>
             <tr>
-                <th field="id" sortable data-options="align:'center'">N° Tarefa</th>
+                <th field="id" id="id" sortable data-options="align:'center'">N° Tarefa</th>
                 <th field="nome_tarefa" width="150" sortable data-options="align:'center'">Tarefa</th>
                 <th field="prioridade" width="100" sortable data-options="align:'center'">Prioridade</th>
                 <th field="status" width="150" sortable data-options="align:'center'">Status</th>
@@ -60,19 +56,13 @@ if (isset($_GET['sair'])) {
 
     </table>
 
-    <div id="pesquisa" style="padding:5px; width:100%;">
+    <div id="dlgBotoes" style="padding:5px; width:100%;">
         <a href="#" id="btnFiltros" class="easyui-linkbutton col-b" data-options="iconCls:'icon-filter'" onclick="$('#dlgFiltros').dialog('open')">Filtrar</a>
-        <!--
-                <a href="#" class="easyui-linkbutton col-b" data-options="iconCls:'icon-search'" onclick="$('#dlgFiltros').dialog('open')">Pesquisar</a>
-            -->
-        <a href="#" class="easyui-linkbutton col-b" id="btnAdicionar" data-options="iconCls:'icon-add'" onclick="$('#dlgAdicionar').dialog('open')">Adicionar</a>
 
-        <a href="?sair" class="easyui-linkbutton col-b">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-closed-fill" viewBox="0 0 16 16">
-                <path d="M12 1a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2a1 1 0 0 1 1-1zm-2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-            </svg>
-            Sair
-        </a>
+        <a href="#" class="easyui-linkbutton col-b" id="btnAdicionar" data-options="iconCls:'icon-add'" onclick="$('#dlgAdicionar').dialog('open')">Adicionar</a>
+        <a href="#" class="easyui-linkbutton col-b" id="btnEditar" data-options="iconCls:'icon-edit'">Editar</a>
+        <a href="#" class="easyui-linkbutton col-b" id="btnExcluir" data-options="iconCls:'icon-remove'">Excluir</a>
+        <a href="#" id="menuUsuario" class="easyui-menubutton" data-options="iconCls:'icon-usuario'" menu="#menu" style="float: right; margin-right: 50px;"> <span> <?php echo $_SESSION['usuario']; ?> </span></a>
     </div>
 
     <div id="dlgFiltros" class="easyui-dialog" style="padding: 5px; width: 700px;" title="Filtros" modal="true" buttons="#dlgFiltros-buttons" closed="true">
@@ -141,18 +131,37 @@ if (isset($_GET['sair'])) {
             </label>
 
             <div id="dlgAdicionar-buttons">
-                <a href="#" class="easyui-linkbutton col-b" id="btnAdicionarTarefa" style="margin: 5px; width: 100px; float: right;">Adicionar</a>
                 <a href="#" class="easyui-linkbutton col-b" id="btnCancelar" style="margin: 5px; width: 100px; float: right;">Cancelar</a>
+                <a href="#" class="easyui-linkbutton col-b" id="btnAdicionarTarefa" style="margin: 5px; width: 100px; float: right;">Adicionar</a>
+                <a href="#" class="easyui-linkbutton col-b" id="btnAtualizarTarefa" style="margin: 5px; width: 100px; float: right; display: none;">Atualizar</a>
             </div>
         </form>
     </div>
 
+
+    <div id="menu">
+        <div id="smConfiguracoes">Configurações</div>
+        <div class="menu-sep"></div>
+        <div id="smSair">Sair</div>
+    </div>
 
     <script>
         $(document).ready(function() {
             $('#grdTarefas').datagrid({
                 url: '../tarefas/buscarTarefas.php',
             })
+        })
+
+        $('#smSair').click(function(){
+            $.messager.confirm('Confirmação', 'Tem certeza que deseja sair?', function(r){
+                if (r){
+                    window.location.href = "?sair";
+                }
+            })
+        })
+
+        $('#smConfiguracoes').click(function(){
+            console.log('configuracoes');
         })
 
         $('#btnAdicionarTarefa').click(function() {
@@ -163,6 +172,7 @@ if (isset($_GET['sair'])) {
                 $.ajax({
                     type: 'GET',
                     url: url,
+                    dataType: 'json',
                     success: function(data) {
                         
                         if (data && data.success === true) {
@@ -178,9 +188,89 @@ if (isset($_GET['sair'])) {
             }
         })
 
+        $('#btnEditar').click(function(){
+            var rows = $('#grdTarefas').datagrid('getSelections');
+
+            if(rows.length > 0) {
+                var filtro_id = rows[0].id;
+                var url = '../tarefas/buscarTarefas.php?id=' + filtro_id;
+
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data && data.success === true) {
+                            $('#dlgAdicionar').dialog('open');
+                            $('#btnAtualizarTarefa').show();
+                            $('#cbxTarefa').combobox('setValue', data.rows[0].nome_tarefa);
+                            $('#cbxPrioridade').combobox('setValue', data.rows[0].prioridade);
+                            $('#cbxStatus').combobox('setValue', data.rows[0].status);
+                            $('#dtpDataVencimento').datebox('setValue', data.rows[0].vencimento);
+                        }
+                    }
+                })
+            } else{
+                $.messager.alert('Erro', 'Selecione uma tarefa para editar!', 'error');
+            }
+
+            $('#btnAtualizarTarefa').off('click').click(function(){
+                
+                var tarefa_id = rows[0].tarefa_id;
+
+                var url = '../controllers/atualizar_tarefa.php?tarefa_id=' + tarefa_id + '&prioridade=' + $('#cbxPrioridade').combobox('getValue') + '&status=' + $('#cbxStatus').combobox('getValue') + '&data_vencimento=' + $('#dtpDataVencimento').datebox('getValue') + '&id=' + rows[0].id;
+
+                if($('#cbxTarefa').combobox('getValue') && $('#cbxPrioridade').combobox('getValue') && $('#cbxStatus').combobox('getValue') && $('#dtpDataVencimento').datebox('getValue') !== ''){
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data && data.success === true) {
+                                $('#frmAdicionar').form('clear');
+                                $('#dlgAdicionar').dialog('close');
+                                $('#grdTarefas').datagrid('reload');
+                                console.log('teste');
+                                
+                                $.messager.alert('Sucesso', data.msg_atualizacao, 'info');
+                            } else{
+                                $.messager.alert('Erro', 'Erro ao atualizar tarefa!', 'error');
+                            }
+                        }
+                    })
+                }
+            })
+        })
+
         $('#btnCancelar').click(function(){
             $('#frmAdicionar').form('clear');
             $('#dlgAdicionar').dialog('close');
+            $('#btnAtualizarTarefa').hide();
+        })
+
+        $('#btnExcluir').click(function(){
+            var rows = $('#grdTarefas').datagrid('getSelections');
+            
+            if(rows.length > 0) {
+                var id = rows[0].id;
+                var url = '../controllers/excluir_tarefa.php?id=' + id;
+
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data && data.success === true) {
+                            $('#grdTarefas').datagrid('reload');
+                        } else{
+                            $.messager.alert('Erro', 'Erro ao excluir tarefa!', 'error');
+                        }
+
+                    }
+                })
+            } else{
+                $.messager.alert('Erro', 'Selecione pelo menos uma tarefa!', 'error');
+            }
         })
 
 
