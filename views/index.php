@@ -35,7 +35,7 @@ if (isset($_GET['sair'])) {
     <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../easyui/locale/easyui-lang-pt_BR.js"></script>
 
-    <title>Lista Tareas</title>
+    <title>Lista Tarefas</title>
 </head>
 
 <body style="background-color: rgba(0, 0, 0, 0.63); width: 80%; margin: 0 auto; padding: 10px">
