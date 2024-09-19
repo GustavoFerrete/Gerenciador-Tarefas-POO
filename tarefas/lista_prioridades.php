@@ -1,9 +1,10 @@
 <?php
-
-$lista = [
-    ['id' => 1, 'descricao' => 'BAIXA'],
-    ['id' => 2, 'descricao' => 'MÉDIA'],
-    ['id' => 3, 'descricao' => 'MÁXIMA']
-];
-
-echo json_encode($lista, JSON_UNESCAPED_UNICODE);
+session_start();
+include('../Repositories/TarefasRepository.php');
+try {
+    // Instanciando diretamente a função para trazer a lista de prioridades, devido ser uma função estatica
+    $lista_prioridades = Tarefas::listaPrioridades();
+    echo json_encode($lista_prioridades, JSON_UNESCAPED_UNICODE);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}

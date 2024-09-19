@@ -95,7 +95,7 @@ if (isset($_GET['sair'])) {
                         <thead>
                             <tr>
                                 <th field="ck" checkbox="true"></th>
-                                <th field='criacao_usuario' width="150px">Usuário de Criação</th>
+                                <th field='usuario_criacao' width="150px">Usuário de Criação</th>
                             </tr>
                         </thead>
                     </table>
@@ -179,7 +179,7 @@ if (isset($_GET['sair'])) {
                             $('#frmAdicionar').form('clear');
                             $('#dlgAdicionar').dialog('close');
                             $('#grdTarefas').datagrid('reload');
-                            $.messager.alert('Sucesso', data.msg_t, 'info');
+                            $.messager.alert('Sucesso', data.msg, 'info');
                         }
                     },
                 })
@@ -216,7 +216,7 @@ if (isset($_GET['sair'])) {
 
             $('#btnAtualizarTarefa').off('click').click(function(){
                 
-                var tarefa_id = rows[0].tarefa_id;
+                var tarefa_id = $('#cbxTarefa').combobox('getValue');
 
                 var url = '../controllers/atualizar_tarefa.php?tarefa_id=' + tarefa_id + '&prioridade=' + $('#cbxPrioridade').combobox('getValue') + '&status=' + $('#cbxStatus').combobox('getValue') + '&data_vencimento=' + $('#dtpDataVencimento').datebox('getValue') + '&id=' + rows[0].id;
 
@@ -232,9 +232,9 @@ if (isset($_GET['sair'])) {
                                 $('#grdTarefas').datagrid('reload');
                                 console.log('teste');
                                 
-                                $.messager.alert('Sucesso', data.msg_atualizacao, 'info');
+                                $.messager.alert('Sucesso', data.msg, 'info');
                             } else{
-                                $.messager.alert('Erro', 'Erro ao atualizar tarefa!', 'error');
+                                $.messager.alert('Erro', data.msg, 'error');
                             }
                         }
                     })
@@ -261,7 +261,9 @@ if (isset($_GET['sair'])) {
                     dataType: 'json',
                     success: function(data) {
                         if (data && data.success === true) {
-                            $('#grdTarefas').datagrid('reload');
+                            $.messager.alert('Sucesso', data.msg, 'info', function(){
+                                $('#grdTarefas').datagrid('reload');    
+                            });
                         } else{
                             $.messager.alert('Erro', 'Erro ao excluir tarefa!', 'error');
                         }

@@ -1,41 +1,23 @@
 <?php
 session_start();
-
-include 'pdo.php';
-
-$input_arr = array();
-foreach ($_GET as $key => $input_arr) {
-    $_GET[$key] = addslashes($input_arr);
+include '../Repositories/HBancoDeDados_class.php';
+extract($_REQUEST, EXTR_OVERWRITE);
+try {
+    $tabela = 'tarefa';
+    $campos_e_valores = [
+        'tarefa_id' => $nome_tarefa,
+        'prioridade' => $prioridade,
+        'status' => $status,
+        'usuario_criacao' => $_SESSION['usuario'],
+        'criacao_datahora' => date('Y-m-d H:i:s'),
+        'vencimento' => $data_vencimento
+    ];
+    $insert = HBancoDeDados::Gerar_Insert($pdo, $tabela, $campos_e_valores);
+    if ($insert) {
+        echo json_encode(array('success' => true, 'msg' => 'Tarefa criada com sucesso!'), JSON_UNESCAPED_UNICODE);
+    } else {
+        echo json_encode(array('success' => false, 'msg' => 'Erro ao criar tarefa!'), JSON_UNESCAPED_UNICODE);
+    }
+} catch (PDOException $e) {
+    echo $e->getMessage();
 }
-
-extract($_GET, EXTR_OVERWRITE);
-
-$data_formatada = date('Y-m-d H:i:s', strtotime($data_vencimento));
-
-$insert = "
-    INSERT INTO tarefa (
-        tarefa_id,
-        prioridade,
-        status,
-        usuario_criacao,
-        criacao_datahora,
-        vencimento
-    ) 
-    VALUES (
-        '$nome_tarefa',
-        '$prioridade',
-        '$status',
-        '$_SESSION[usuario]',
-        NOW(),
-        '$data_formatada'
-    )";
-
-$query = $pdo->prepare($insert);
-$query->execute();
-
-$response = array(
-    'success' => true,
-    'msg_t' => 'Tarefa criada com sucesso!'
-);
-echo json_encode($response);
-

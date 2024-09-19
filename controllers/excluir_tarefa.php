@@ -1,19 +1,16 @@
 <?php
 session_start();
-
-include 'pdo.php';
-
-$input_arr = array();
-foreach ($_GET as $key => $input_arr) {
-    $_GET[$key] = addslashes($input_arr);
+include '../Repositories/HBancoDeDados_class.php';
+extract($_REQUEST, EXTR_OVERWRITE);
+try {
+    $tabela = 'tarefa';
+    $where = "id = '$id'";
+    $delete = HBancoDeDados::Gerar_Delete($pdo, $tabela, $where);
+    if ($delete) {
+        echo json_encode(array('success' => true, 'msg' => 'Tarefa excluída com sucesso!'), JSON_UNESCAPED_UNICODE);
+    } else {
+        echo json_encode(array('success' => false, 'msg' => 'Erro ao excluir tarefa!'), JSON_UNESCAPED_UNICODE);
+    }    
+} catch (PDOException $e) {
+    echo $e->getMessage();
 }
-extract($_GET, EXTR_OVERWRITE);
-
-//print_r($_GET);
-
-$deletar = "DELETE FROM tarefa WHERE id = '$id'";
-$query = $pdo->prepare($deletar);
-$query->execute();
-
-
-echo json_encode(array('success' => true));
